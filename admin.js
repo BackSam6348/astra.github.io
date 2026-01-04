@@ -1,19 +1,32 @@
 let posts = [];
 
 fetch("posts.json")
-  .then(res => res.json())
+  .then(r => r.json())
   .then(data => {
     posts = data;
     renderList();
   });
 
 function addPost() {
+  const file = image.files[0];
+  let imagePath = null;
+
+  if (file) {
+    imagePath = `/images/${file.name}`;
+    alert(
+      `이미지 업로드 안내:\n/images/${file.name} 로 저장 후 GitHub에 업로드하세요.`
+    );
+  }
+
   posts.push({
     id: Date.now(),
     title: title.value,
     date: new Date().toISOString().split("T")[0],
-    content: content.value
+    content: content.value,
+    pinned: pinned.checked,
+    image: imagePath
   });
+
   renderList();
 }
 
@@ -22,7 +35,7 @@ function renderList() {
   posts.forEach(p => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <b>${p.title}</b> (${p.date})
+      ${p.pinned ? "📌" : ""} <b>${p.title}</b> (${p.date})
       <button onclick="editPost(${p.id})">수정</button>
       <button onclick="deletePost(${p.id})">삭제</button>
     `;
@@ -34,6 +47,7 @@ function editPost(id) {
   const p = posts.find(p => p.id === id);
   title.value = p.title;
   content.value = p.content;
+  pinned.checked = p.pinned;
   deletePost(id);
 }
 
