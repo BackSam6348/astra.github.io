@@ -8,8 +8,24 @@ body {
 header {
     background: #222;
     color: white;
-    padding: 30px;
+    padding: 40px 20px;
     text-align: center;
+}
+
+.discord-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 22px;
+    background: #5865F2;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.discord-btn:hover {
+    background: #4752c4;
 }
 
 main {
