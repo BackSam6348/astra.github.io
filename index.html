@@ -1,24 +1,152 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Astra Group</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Astra Group</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #2563eb;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Pretendard", system-ui, -apple-system;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+main {
+  max-width: 860px;
+  margin: auto;
+  padding: 24px;
+}
+
+.post {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.post h2 {
+  margin: 0 0 8px;
+}
+
+.post small {
+  color: var(--muted);
+}
+
+.post img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+.pinned {
+  border-left: 6px solid var(--accent);
+}
+
+.lock {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 24px 0;
+}
+</style>
 </head>
+
 <body>
 
 <header>
   <h1>Astra Group</h1>
-  <a class="discord-btn" href="https://discord.gg/astraspace" target="_blank">
-    Discord 서버 참여
-  </a>
+  <a href="https://discord.gg/astraspace" target="_blank">Discord 서버 참여</a>
 </header>
 
 <main id="posts"></main>
 
-<footer>© 2026 Astra Group</footer>
+<footer>
+  © 2026 Astra Group
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="script.js"></script>
+<script>
+fetch("posts.json")
+  .then(r => r.json())
+  .then(data => render(data));
+
+async function hash(text) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return [...new Uint8Array(buf)]
+    .map(b => b.toString(16).padStart(2,"0"))
+    .join("");
+}
+
+async function render(posts) {
+  const container = document.getElementById("posts");
+
+  posts
+    .sort((a,b) => b.pinned - a.pinned)
+    .forEach(post => {
+      const div = document.createElement("div");
+      div.className = "post" + (post.pinned ? " pinned" : "");
+
+      div.innerHTML = `
+        <h2>${post.pinned ? "📌 " : ""}${post.title}</h2>
+        <small>${post.date} ${post.password ? "🔒 비공개" : ""}</small>
+        <div class="content"></div>
+      `;
+
+      div.onclick = async () => {
+        if (post.password) {
+          const input = prompt("비밀번호를 입력하세요");
+          if (!input) return;
+          if (await hash(input) !== post.password) {
+            alert("비밀번호가 틀렸습니다");
+            return;
+          }
+        }
+        div.querySelector(".content").innerHTML =
+          marked.parse(post.content || "");
+      };
+
+      container.appendChild(div);
+    });
+}
+</script>
+
 </body>
 </html>
