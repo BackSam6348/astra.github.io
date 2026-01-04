@@ -3,7 +3,7 @@
     "id": 1704630000000,
     "title": "📢 Astra Group 공지",
     "date": "2026-01-06",
-    "content": "중요한 공지 내용입니다.",
+    "content": "## 중요 안내\n\nAstra Group 공식 홈페이지입니다.",
     "pinned": true,
     "image": "/images/notice.png"
   },
@@ -11,7 +11,7 @@
     "id": 1704716400000,
     "title": "개발 로그 #1",
     "date": "2026-01-07",
-    "content": "이번 업데이트 내용입니다.",
+    "content": "### 업데이트 내용\n\n- 기능 추가\n- 버그 수정\n\n![미리보기](/images/devlog1.png)",
     "pinned": false,
     "image": "/images/devlog1.png"
   }
