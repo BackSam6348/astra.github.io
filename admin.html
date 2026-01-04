@@ -1,18 +1,13 @@
+<h2>게시글 작성</h2>
+
 <input id="title" placeholder="제목">
+<label><input type="checkbox" id="pinned"> 공지 고정</label>
 
-<label>
-  <input type="checkbox" id="pinned">
-  공지로 고정
-</label>
+<textarea id="content" placeholder="Markdown 지원"></textarea>
 
-<textarea id="content" placeholder="내용"></textarea>
+<input type="file" id="image" accept="image/*">
 
-<label>
-  이미지 첨부
-  <input type="file" id="image" accept="image/*">
-</label>
-
-<button onclick="addPost()">게시글 추가</button>
+<button onclick="addPost()">추가</button>
 <button onclick="exportPosts()">posts.json 저장</button>
 
 <ul id="list"></ul>
