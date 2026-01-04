@@ -2,151 +2,223 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Astra Group · Admin</title>
+<title>Astra Group · Admin Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 :root {
-  --bg: #0f172a;
-  --card: #111827;
-  --border: #1f2933;
+  --bg: #0b1020;
+  --panel: #111827;
+  --panel-2: #020617;
+  --border: #1f2937;
   --text: #e5e7eb;
   --muted: #9ca3af;
   --accent: #38bdf8;
+  --danger: #ef4444;
 }
 
-* { box-sizing: border-box; font-family: "Pretendard", system-ui; }
+* {
+  box-sizing: border-box;
+  font-family: "Pretendard", system-ui, -apple-system;
+}
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  height: 100vh;
+  display: flex;
 }
 
-header {
-  padding: 16px 24px;
-  font-size: 20px;
-  font-weight: 700;
-  border-bottom: 1px solid var(--border);
-}
-
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 24px;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+/* Sidebar */
+aside {
+  width: 260px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
   padding: 20px;
 }
 
-.card h2 {
-  margin: 0 0 16px;
-  font-size: 16px;
+aside h1 {
+  font-size: 18px;
+  margin: 0 0 24px;
 }
 
-input, textarea {
-  width: 100%;
-  background: #020617;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px;
-  color: var(--text);
+.nav {
   font-size: 14px;
+  color: var(--muted);
 }
 
-textarea {
-  min-height: 220px;
-  resize: vertical;
-}
-
-.row {
+/* Main */
+main {
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0;
+  flex-direction: column;
 }
 
-button {
-  border: none;
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  background: var(--accent);
-  color: #020617;
-  font-weight: 600;
-}
-
-button.secondary {
-  background: #020617;
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.list-item {
-  padding: 12px;
+/* Header */
+header {
+  padding: 16px 24px;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.list-item small {
+header b {
+  font-size: 16px;
+}
+
+header button {
+  background: var(--accent);
+  color: #020617;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+}
+
+/* Editor */
+.editor {
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.editor input,
+.editor textarea {
+  width: 100%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.editor textarea {
+  min-height: 260px;
+  resize: vertical;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.editor button {
+  background: var(--accent);
+  color: #020617;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* List */
+.list {
+  border-left: 1px solid var(--border);
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.post {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.post b {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.post small {
   color: var(--muted);
 }
 
-.list-item button {
-  padding: 6px 10px;
+.actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
   font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+.edit {
+  background: #334155;
+  color: var(--text);
+}
+
+.delete {
+  background: var(--danger);
+  color: white;
 }
 
 @media (max-width: 900px) {
-  main {
-    grid-template-columns: 1fr;
-  }
+  aside { display: none; }
+  .content { grid-template-columns: 1fr; }
+  .list { border-left: none; border-top: 1px solid var(--border); }
 }
 </style>
 </head>
 
 <body>
 
-<header>🛠 Astra Group · Admin</header>
+<aside>
+  <h1>🛠 Astra Group</h1>
+  <div class="nav">
+    관리자 패널<br><br>
+    • 게시글 관리<br>
+    • 공지 설정<br>
+    • JSON 내보내기
+  </div>
+</aside>
 
 <main>
 
-  <!-- 글 작성 -->
-  <div class="card">
-    <h2>게시글 작성</h2>
+<header>
+  <b>게시글 편집기</b>
+  <button onclick="exportPosts()">posts.json 저장</button>
+</header>
 
+<div class="content">
+
+  <!-- Editor -->
+  <div class="editor">
     <input id="title" placeholder="제목">
+
+    <input id="password" placeholder="게시글 비밀번호 (선택)">
 
     <div class="row">
       <label>
-        <input type="checkbox" id="pinned"> 공지 고정
+        <input type="checkbox" id="pinned"> 공지로 고정
       </label>
     </div>
 
     <textarea id="content" placeholder="Markdown 지원"></textarea>
 
-    <div class="row">
-      <button onclick="addPost()">저장</button>
-      <button class="secondary" onclick="exportPosts()">posts.json 다운로드</button>
-    </div>
+    <button onclick="addPost()">저장</button>
   </div>
 
-  <!-- 게시글 목록 -->
-  <div class="card">
-    <h2>게시글 목록</h2>
-    <div id="list"></div>
-  </div>
+  <!-- List -->
+  <div class="list" id="list"></div>
 
+</div>
 </main>
 
 <script>
@@ -154,25 +226,37 @@ let posts = [];
 
 fetch("posts.json")
   .then(r => r.json())
-  .then(d => {
-    posts = d;
-    render();
-  })
+  .then(d => { posts = d; render(); })
   .catch(() => render());
 
-function addPost() {
+async function hash(text) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return [...new Uint8Array(buf)]
+    .map(b => b.toString(16).padStart(2,"0"))
+    .join("");
+}
+
+async function addPost() {
   if (!title.value.trim()) return alert("제목을 입력하세요");
+
+  let pw = null;
+  if (password.value.trim()) {
+    pw = await hash(password.value.trim());
+  }
 
   posts.unshift({
     id: Date.now(),
     title: title.value,
     date: new Date().toISOString().split("T")[0],
     content: content.value,
-    pinned: pinned.checked
+    pinned: pinned.checked,
+    password: pw
   });
 
   title.value = "";
   content.value = "";
+  password.value = "";
   pinned.checked = false;
 
   render();
@@ -181,19 +265,17 @@ function addPost() {
 function render() {
   list.innerHTML = "";
 
-  [...posts]
+  posts
     .sort((a,b) => b.pinned - a.pinned)
     .forEach(p => {
       const el = document.createElement("div");
-      el.className = "list-item";
+      el.className = "post";
       el.innerHTML = `
-        <div>
-          ${p.pinned ? "📌 " : ""}<b>${p.title}</b><br>
-          <small>${p.date}</small>
-        </div>
-        <div>
-          <button onclick="edit(${p.id})">수정</button>
-          <button onclick="removePost(${p.id})">삭제</button>
+        <b>${p.pinned ? "📌 " : ""}${p.title}</b>
+        <small>${p.date} ${p.password ? "🔒" : ""}</small>
+        <div class="actions">
+          <button class="edit" onclick="edit(${p.id})">수정</button>
+          <button class="delete" onclick="removePost(${p.id})">삭제</button>
         </div>
       `;
       list.appendChild(el);
