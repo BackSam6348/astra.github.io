@@ -1,8 +1,18 @@
 [
   {
     "id": 1704630000000,
-    "title": "Astra Group 홈페이지 오픈",
+    "title": "📢 Astra Group 공지",
     "date": "2026-01-06",
-    "content": "Astra Group 공식 홈페이지가 오픈되었습니다."
+    "content": "중요한 공지 내용입니다.",
+    "pinned": true,
+    "image": "/images/notice.png"
+  },
+  {
+    "id": 1704716400000,
+    "title": "개발 로그 #1",
+    "date": "2026-01-07",
+    "content": "이번 업데이트 내용입니다.",
+    "pinned": false,
+    "image": "/images/devlog1.png"
   }
 ]
