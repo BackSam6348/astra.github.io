@@ -1,0 +1,42 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont;
+    margin: 0;
+    background: #f7f7f7;
+    color: #333;
+}
+
+header {
+    background: #222;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+main {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.post {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.post h2 {
+    margin-top: 0;
+}
+
+.post .date {
+    font-size: 0.9em;
+    color: #777;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
