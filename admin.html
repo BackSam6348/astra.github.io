@@ -1,15 +1,229 @@
-<h2>게시글 작성</h2>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Astra Group · Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<input id="title" placeholder="제목">
-<label><input type="checkbox" id="pinned"> 공지 고정</label>
+<style>
+:root {
+  --bg: #0f172a;
+  --card: #111827;
+  --border: #1f2933;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #38bdf8;
+}
 
-<textarea id="content" placeholder="Markdown 지원"></textarea>
+* { box-sizing: border-box; font-family: "Pretendard", system-ui; }
 
-<input type="file" id="image" accept="image/*">
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
 
-<button onclick="addPost()">추가</button>
-<button onclick="exportPosts()">posts.json 저장</button>
+header {
+  padding: 16px 24px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+}
 
-<ul id="list"></ul>
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+}
 
-<script src="admin.js"></script>
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.card h2 {
+  margin: 0 0 16px;
+  font-size: 16px;
+}
+
+input, textarea {
+  width: 100%;
+  background: #020617;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 220px;
+  resize: vertical;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--accent);
+  color: #020617;
+  font-weight: 600;
+}
+
+button.secondary {
+  background: #020617;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.list-item {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item small {
+  color: var(--muted);
+}
+
+.list-item button {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>🛠 Astra Group · Admin</header>
+
+<main>
+
+  <!-- 글 작성 -->
+  <div class="card">
+    <h2>게시글 작성</h2>
+
+    <input id="title" placeholder="제목">
+
+    <div class="row">
+      <label>
+        <input type="checkbox" id="pinned"> 공지 고정
+      </label>
+    </div>
+
+    <textarea id="content" placeholder="Markdown 지원"></textarea>
+
+    <div class="row">
+      <button onclick="addPost()">저장</button>
+      <button class="secondary" onclick="exportPosts()">posts.json 다운로드</button>
+    </div>
+  </div>
+
+  <!-- 게시글 목록 -->
+  <div class="card">
+    <h2>게시글 목록</h2>
+    <div id="list"></div>
+  </div>
+
+</main>
+
+<script>
+let posts = [];
+
+fetch("posts.json")
+  .then(r => r.json())
+  .then(d => {
+    posts = d;
+    render();
+  })
+  .catch(() => render());
+
+function addPost() {
+  if (!title.value.trim()) return alert("제목을 입력하세요");
+
+  posts.unshift({
+    id: Date.now(),
+    title: title.value,
+    date: new Date().toISOString().split("T")[0],
+    content: content.value,
+    pinned: pinned.checked
+  });
+
+  title.value = "";
+  content.value = "";
+  pinned.checked = false;
+
+  render();
+}
+
+function render() {
+  list.innerHTML = "";
+
+  [...posts]
+    .sort((a,b) => b.pinned - a.pinned)
+    .forEach(p => {
+      const el = document.createElement("div");
+      el.className = "list-item";
+      el.innerHTML = `
+        <div>
+          ${p.pinned ? "📌 " : ""}<b>${p.title}</b><br>
+          <small>${p.date}</small>
+        </div>
+        <div>
+          <button onclick="edit(${p.id})">수정</button>
+          <button onclick="removePost(${p.id})">삭제</button>
+        </div>
+      `;
+      list.appendChild(el);
+    });
+}
+
+function edit(id) {
+  const p = posts.find(p => p.id === id);
+  title.value = p.title;
+  content.value = p.content;
+  pinned.checked = p.pinned;
+  removePost(id);
+}
+
+function removePost(id) {
+  posts = posts.filter(p => p.id !== id);
+  render();
+}
+
+function exportPosts() {
+  const blob = new Blob(
+    [JSON.stringify(posts, null, 2)],
+    { type: "application/json" }
+  );
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "posts.json";
+  a.click();
+}
+</script>
+
+</body>
+</html>
