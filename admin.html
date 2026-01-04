@@ -2,19 +2,18 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Astra Group · Admin Panel</title>
+<title>Astra Group · Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 :root {
-  --bg: #0b1020;
-  --panel: #111827;
-  --panel-2: #020617;
-  --border: #1f2937;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --accent: #38bdf8;
-  --danger: #ef4444;
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --soft: #f1f5f9;
 }
 
 * {
@@ -32,20 +31,15 @@ body {
 
 /* Sidebar */
 aside {
-  width: 260px;
+  width: 240px;
   background: var(--panel);
   border-right: 1px solid var(--border);
   padding: 20px;
 }
 
 aside h1 {
+  margin: 0 0 20px;
   font-size: 18px;
-  margin: 0 0 24px;
-}
-
-.nav {
-  font-size: 14px;
-  color: var(--muted);
 }
 
 /* Main */
@@ -57,7 +51,7 @@ main {
 
 /* Header */
 header {
-  padding: 16px 24px;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
@@ -65,114 +59,112 @@ header {
 }
 
 header b {
-  font-size: 16px;
-}
-
-header button {
-  background: var(--accent);
-  color: #020617;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-weight: 600;
-  cursor: pointer;
+  font-size: 15px;
 }
 
 /* Content */
 .content {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 1.2fr 0.8fr;
 }
 
 /* Editor */
 .editor {
-  padding: 24px;
-  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.editor input,
-.editor textarea {
+input, textarea {
   width: 100%;
-  background: var(--panel-2);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 12px;
-  color: var(--text);
-  margin-bottom: 12px;
+  padding: 10px;
+  font-size: 14px;
 }
 
-.editor textarea {
-  min-height: 260px;
+textarea {
+  height: 240px;
   resize: vertical;
 }
 
-.row {
+.toolbar {
   display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 12px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
-.editor button {
-  background: var(--accent);
-  color: #020617;
-  border: none;
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-weight: 600;
+.toolbar button {
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
   cursor: pointer;
-}
-
-/* List */
-.list {
-  border-left: 1px solid var(--border);
-  padding: 16px;
-  overflow-y: auto;
-}
-
-.post {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.post b {
-  display: block;
-  margin-bottom: 4px;
-}
-
-.post small {
-  color: var(--muted);
 }
 
 .actions {
-  margin-top: 8px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .actions button {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 10px;
   border: none;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-.edit {
-  background: #334155;
-  color: var(--text);
-}
-
-.delete {
-  background: var(--danger);
+.save {
+  background: var(--accent);
   color: white;
+}
+
+.cancel {
+  background: #e5e7eb;
+}
+
+/* Preview */
+.preview {
+  border-left: 1px solid var(--border);
+  padding: 20px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+.preview h1, .preview h2 {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+.preview img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.list {
+  border-top: 1px solid var(--border);
+  padding: 12px;
+}
+
+.post {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+.post button {
+  font-size: 12px;
+  margin-left: 6px;
 }
 
 @media (max-width: 900px) {
   aside { display: none; }
   .content { grid-template-columns: 1fr; }
-  .list { border-left: none; border-top: 1px solid var(--border); }
+  .preview { border-left: none; border-top: 1px solid var(--border); }
 }
 </style>
 </head>
@@ -181,18 +173,13 @@ header button {
 
 <aside>
   <h1>🛠 Astra Group</h1>
-  <div class="nav">
-    관리자 패널<br><br>
-    • 게시글 관리<br>
-    • 공지 설정<br>
-    • JSON 내보내기
-  </div>
+  관리자 페이지
 </aside>
 
 <main>
 
 <header>
-  <b>게시글 편집기</b>
+  <b>게시글 에디터</b>
   <button onclick="exportPosts()">posts.json 저장</button>
 </header>
 
@@ -201,48 +188,85 @@ header button {
   <!-- Editor -->
   <div class="editor">
     <input id="title" placeholder="제목">
-
     <input id="password" placeholder="게시글 비밀번호 (선택)">
 
-    <div class="row">
-      <label>
-        <input type="checkbox" id="pinned"> 공지로 고정
-      </label>
+    <label>
+      <input type="checkbox" id="pinned"> 공지로 고정
+    </label>
+
+    <div class="toolbar">
+      <button onclick="insert('**굵게**')">B</button>
+      <button onclick="insert('*기울임*')">I</button>
+      <button onclick="insert('# 제목')">H1</button>
+      <button onclick="insert('## 소제목')">H2</button>
+      <button onclick="insert('[텍스트](링크)')">링크</button>
+      <button onclick="insert('![설명](이미지URL)')">이미지</button>
+      <button onclick="insert('```\n코드\n```')">코드</button>
     </div>
 
-    <textarea id="content" placeholder="Markdown 지원"></textarea>
+    <textarea id="content" oninput="updatePreview()"></textarea>
 
-    <button onclick="addPost()">저장</button>
+    <div class="actions">
+      <button class="save" onclick="addPost()">저장</button>
+      <button class="cancel" onclick="cancelEdit()">취소</button>
+    </div>
+
+    <div class="list" id="list"></div>
   </div>
 
-  <!-- List -->
-  <div class="list" id="list"></div>
+  <!-- Preview -->
+  <div class="preview" id="preview"></div>
 
 </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 let posts = [];
+let backup = null;
 
 fetch("posts.json")
   .then(r => r.json())
-  .then(d => { posts = d; render(); })
-  .catch(() => render());
+  .then(d => { posts = d; renderList(); });
 
-async function hash(text) {
-  const enc = new TextEncoder().encode(text);
-  const buf = await crypto.subtle.digest("SHA-256", enc);
-  return [...new Uint8Array(buf)]
-    .map(b => b.toString(16).padStart(2,"0"))
-    .join("");
+function insert(text) {
+  const t = content;
+  const start = t.selectionStart;
+  const end = t.selectionEnd;
+  t.value = t.value.slice(0,start) + text + t.value.slice(end);
+  t.focus();
+  updatePreview();
+}
+
+function updatePreview() {
+  preview.innerHTML = marked.parse(content.value || "");
+}
+
+function cancelEdit() {
+  if (!backup) return;
+  title.value = backup.title;
+  content.value = backup.content;
+  pinned.checked = backup.pinned;
+  password.value = "";
+  updatePreview();
+}
+
+function edit(id) {
+  const p = posts.find(p => p.id === id);
+  backup = {...p};
+  title.value = p.title;
+  content.value = p.content;
+  pinned.checked = p.pinned;
+  updatePreview();
+  removePost(id);
 }
 
 async function addPost() {
-  if (!title.value.trim()) return alert("제목을 입력하세요");
-
   let pw = null;
   if (password.value.trim()) {
-    pw = await hash(password.value.trim());
+    const enc = new TextEncoder().encode(password.value);
+    const buf = await crypto.subtle.digest("SHA-256", enc);
+    pw = [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
   }
 
   posts.unshift({
@@ -258,48 +282,33 @@ async function addPost() {
   content.value = "";
   password.value = "";
   pinned.checked = false;
+  preview.innerHTML = "";
+  backup = null;
 
-  render();
+  renderList();
 }
 
-function render() {
+function renderList() {
   list.innerHTML = "";
-
-  posts
-    .sort((a,b) => b.pinned - a.pinned)
-    .forEach(p => {
-      const el = document.createElement("div");
-      el.className = "post";
-      el.innerHTML = `
-        <b>${p.pinned ? "📌 " : ""}${p.title}</b>
-        <small>${p.date} ${p.password ? "🔒" : ""}</small>
-        <div class="actions">
-          <button class="edit" onclick="edit(${p.id})">수정</button>
-          <button class="delete" onclick="removePost(${p.id})">삭제</button>
-        </div>
-      `;
-      list.appendChild(el);
-    });
-}
-
-function edit(id) {
-  const p = posts.find(p => p.id === id);
-  title.value = p.title;
-  content.value = p.content;
-  pinned.checked = p.pinned;
-  removePost(id);
+  posts.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "post";
+    div.innerHTML = `
+      ${p.pinned ? "📌 " : ""}${p.title}
+      <button onclick="edit(${p.id})">수정</button>
+      <button onclick="removePost(${p.id})">삭제</button>
+    `;
+    list.appendChild(div);
+  });
 }
 
 function removePost(id) {
   posts = posts.filter(p => p.id !== id);
-  render();
+  renderList();
 }
 
 function exportPosts() {
-  const blob = new Blob(
-    [JSON.stringify(posts, null, 2)],
-    { type: "application/json" }
-  );
+  const blob = new Blob([JSON.stringify(posts,null,2)],{type:"application/json"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "posts.json";
