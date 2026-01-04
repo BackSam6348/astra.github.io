@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Astra Group Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Astra Group 관리자</h1>
+  <p>게시글 작성 / 수정 / 삭제</p>
+</header>
+
+<main>
+  <input id="title" placeholder="제목">
+  <textarea id="content" placeholder="내용"></textarea>
+
+  <button onclick="addPost()">게시글 추가</button>
+  <button onclick="exportPosts()">posts.json 저장</button>
+
+  <hr>
+
+  <h3>기존 게시글</h3>
+  <ul id="list"></ul>
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>
