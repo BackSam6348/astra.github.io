@@ -1,13 +1,13 @@
 const posts = [
     {
-        title: "첫 번째 게시물",
+        title: "Astra Group 홈페이지 오픈",
         date: "2026-01-04",
-        content: "GitHub Pages로 만든 첫 게시물입니다."
+        content: "Astra Group 공식 홈페이지가 GitHub Pages를 통해 오픈되었습니다."
     },
     {
-        title: "두 번째 게시물",
+        title: "디스코드 커뮤니티 안내",
         date: "2026-01-05",
-        content: "HTML과 JavaScript만으로 관리할 수 있어요."
+        content: "아래 디스코드 서버를 통해 공지, 개발 소식, 커뮤니티 활동을 진행합니다."
     }
 ];
 
